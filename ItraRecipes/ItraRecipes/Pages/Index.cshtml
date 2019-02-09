@@ -1,0 +1,70 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home";
+}
+<link rel="stylesheet" href="~/css/MailRecipesTable.css" />
+<link rel="stylesheet" href="~/css/mainRecipesList.css" />
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a asp-page="./Index" asp-route-sortOrder="@Model.NameSort">
+                     Name
+                </a>
+            </li>
+            <li class="breadcrumb-item">
+                <a asp-page="./Index" asp-route-sortOrder="@Model.DateSort">
+                    Date
+                </a>
+            </li>
+        </ol>
+    </nav>
+    <div class="col-md-12">
+        <div class="row">
+            @foreach (var recipes in Model.Recipes)
+            {
+                <div class="col-lg-12">
+                    <div class="lib-panel">
+                        <div class="row box-shadow">
+                            <div class="col-lg-6">
+                                <img src="@recipes.PreviewImg" />
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="lib-row lib-header">
+                                    <a href="@Url.Page("/RecipesPage",new { RecipesId = recipes.Id })">@recipes.Name</a>
+                                    <div class="lib-header-seperator"></div>
+                                </div>
+                                <div class="lib-row lib-desc">
+                                    <p><i class="fas fa-calendar"></i>@recipes.Date</p>
+                                    <p>@recipes.PreviewText</p>
+                                    <p>
+                                        <i class="fas fa-eye"></i> @recipes.Views
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@{
+    var prevDisabled = !Model.Recipes.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Recipes.HasNextPage ? "disabled" : "";
+}
+<div class="text-md-center">
+    <a asp-page="./Index"
+       asp-route-sortOrder="@Model.CurrentSort"
+       asp-route-pageIndex="@(Model.Recipes.PageIndex - 1)"
+       class="btn btn-secondary @prevDisabled">
+        Prev
+    </a>
+    <a asp-page="./Index"
+       asp-route-sortOrder="@Model.CurrentSort"
+       asp-route-pageIndex="@(Model.Recipes.PageIndex + 1)"
+       class="btn btn-secondary @nextDisabled">
+        Next
+    </a>
+</div>

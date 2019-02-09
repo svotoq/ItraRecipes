@@ -1,0 +1,50 @@
+﻿body {
+  background-color: #f7f7f7;
+}
+.lib-panel {
+  margin-bottom: 20px;
+  padding: 0 20px 0 20px;
+}
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .1);
+}
+.lib-panel img {
+  width: 100%;
+  max-height: 300px;
+  background-color: transparent;
+}
+.lib-panel .row,
+.lib-panel .col-lg-6 {
+  padding: 0;
+  background-color: #FFFFFF;
+}
+.lib-panel .lib-row {
+  padding: 0 20px 0 20px;
+}
+.lib-panel .lib-row.lib-header {
+  background-color: #FFFFFF;
+  font-size: 20px;
+  padding: 10px 20px 0 20px;
+}
+.lib-header-seperator {
+  height: 2px;
+  background-color: #d9d9d9;
+  margin: 7px 0 7px 0;
+}
+.lib-desc {
+  position: relative;
+  display: block;
+  font-size: 13px;
+}
+
+.filters{
+    background-color: white;
+}
+
+.filters.box-shadow{
+    margin: 20px 20px 20px 20px;
+}
+.filters.box-shadow .table th{
+    width: 100%;
+    text-align: center
+}

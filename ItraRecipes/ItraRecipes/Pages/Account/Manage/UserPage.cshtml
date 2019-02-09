@@ -1,0 +1,52 @@
+﻿@page
+
+@model ItraRecipes.Pages.Account.Manage.UserPageModel
+@{
+}
+
+<form id="profile-form" method="post">
+    <div class="form-group">
+        <label asp-for="Input.UserName"></label>
+        <input asp-for="Input.UserName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Input.Email"></label>
+        <input asp-for="Input.Email" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Input.Role"></label>
+        <select asp-for="Input.Role" asp-items="@(new SelectList(Model.AvaliableRoles, "Name"))" class="form-control" style="width:30%;">
+            <option value="" disabled>Role</option>
+        </select>
+    </div>
+    <div>
+        <input asp-for="Input.Id" hidden/>
+        <button type="submit" class="btn btn-primary" asp-route-UserId="@Model.Input.Id">Save</button>
+    </div>
+    @*<table class="table table-bordered table-striped">
+            <tbody>
+                <tr>
+                    <td width="30%"><label>Дата регистрации</label></td>
+                    <td width="70%"></td>
+                </tr>
+                <tr>
+                    <td width="30%"><label asp-for="Input.UserName"></label></td>
+                    <td width="70%">
+                        <div class="edit" data-id="Input.UserName" data-propertyname="UserName" data-title="Enter username">@Model.Input.UserName</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="30%"><label asp-for="Input.Email"></label></td>
+                    <td width="7-%"></td>
+                </tr>
+                <tr>
+                    <td width="30%"><label>External logins</label></td>
+                    <td width="70%"></td>
+                </tr>
+                <tr>
+                    <td width="30%"><label asp-for="Input.Role"></label></td>
+                    <td width="70%"></td>
+                </tr>
+            </tbody>
+        </table>*@
+</form>

@@ -1,0 +1,92 @@
+﻿@page
+@model ItraRecipes.Pages.Account.Manage.AdminPanel
+@{
+    ViewData["Title"] = "Administration";
+}
+<h4>User managment</h4>
+<form asp-page="./Index" method="get">
+    <div class="row form-actions no-color">
+        <div class="col-md-4">
+            <input type="text" name="SearchString" value="@Model.CurrentFilter" placeholder="Enter to filter..." class="form-control" />
+        </div>
+        <div class="col-md-6">
+            <input type="submit" value="Search" asp-page="./AdminPanel" class="btn btn-success" /> |
+            <a asp-page="./AdminPanel">Return to full list</a>
+        </div>
+    </div>
+</form>
+<br />
+<form method="post">
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">
+                    <a asp-page="./AdminPanel" asp-route-sortOrder="@Model.NameSort" asp-route-currentFilter="@Model.CurrentFilter">
+                        Name
+                    </a>
+                </th>
+                <th scope="col">
+                    <a asp-page="./AdminPanel" asp-route-sortOrder="@Model.PostSort" asp-route-currentFilter="@Model.CurrentFilter">
+                        Publications
+                    </a>
+                </th>
+                <th scope="col">
+                    <a asp-page="./AdminPanel" asp-route-sortOrder="@Model.RateSort" asp-route-currentFilter="@Model.CurrentFilter">
+                        Rating
+                    </a>
+                </th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Persons)
+            {
+                <tr>
+                    <th scope="row" style="width:30%">@user.UserName</th>
+                    <td>@user.Posts</td>
+                    <td>@user.UserRating</td>
+                    <td style="width:17%">
+                        <div class="dropdown open">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Action
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" asp-page="./UserPage" asp-route-UserId="@user.Id">Profile</a>
+                                <a class="dropdown-item" asp-page="./MyRecipes" asp-route-UserId="@user.Id">Recipes</a>
+                                <a class="dropdown-item" asp-page="./AddRecipes" asp-route-UserId="@user.Id">Add recipe</a>
+                                @if (user.LockoutEnd == null)
+                                {
+                                    <button type="submit" class="dropdown-item" asp-page-handler="lockout" asp-route-UserId="@user.Id">Lock</button>
+                                }
+                                else
+                                {
+                                    <button type="submit" class="dropdown-item" asp-page-handler="lockout" asp-route-UserId="@user.Id">Unlock</button>
+                                }
+                                <button type="submit" class="dropdown-item" asp-page-handler="delete" asp-route-UserId="@user.Id">Delete</button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @{
+        var prevDisabled = !Model.Persons.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.Persons.HasNextPage ? "disabled" : "";
+    }
+
+    <a asp-page="./AdminPanel"
+       asp-route-sortOrder="@Model.CurrentSort"
+       asp-route-pageIndex="@(Model.Persons.PageIndex - 1)"
+       asp-route-currentFilter="@Model.CurrentFilter"
+       class="btn btn-secondary @prevDisabled">
+        Prev
+    </a>
+    <a asp-page="./AdminPanel"
+       asp-route-sortOrder="@Model.CurrentSort"
+       asp-route-pageIndex="@(Model.Persons.PageIndex + 1)"
+       asp-route-currentFilter="@Model.CurrentFilter"
+       class="btn btn-secondary @nextDisabled">
+        Next
+    </a>
+</form>

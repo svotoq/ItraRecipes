@@ -1,0 +1,132 @@
+﻿@page
+@model ItraRecipes.Pages.Account.Manage.AddRecipesModel
+@{
+    ViewData["Title"] = "Add recipes";
+}
+<h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" for="StatusMessage" />
+
+<div>
+    <form method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <input asp-for="Input.localUserId" hidden />
+        <input asp-for="Input.localRecipesId" hidden />
+        <div class="form-group">
+            <label asp-for="Input.Name"></label>
+            <input asp-for="Input.Name" class="form-control" />
+            <span asp-validation-for="Input.Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.PreviewImg"></label>
+            <input type="hidden"
+                   role="uploadcare-uploader"
+                   data-crop="free" asp-for="Input.PreviewImg" class="form-control" />
+        </div>
+        <span asp-validation-for="Input.PreviewImg" class="text-danger"></span>
+        <div>
+            <select asp-for="Input.Category" asp-items="@(new SelectList(Model.AvaliableCategories, "Name"))" class="form-control" style="width:30%;">
+                <option value="" disabled>Category</option>
+            </select>
+            <span asp-validation-for="Input.Category" class="text-danger"></span>
+        </div>
+        <br />
+        <div class="form-group">
+            <label asp-for="Input.Ingredients"></label>
+            <input asp-for="Input.Ingredients" class="form-control" />
+            <span asp-validation-for="Input.Ingredients" class="text-danger"></span>
+            <div>
+                <small>Ingredient1:count1; Ingredient2:count2; ...</small>
+            </div>
+        </div>
+        <div class="form-group">
+            <select asp-for="Input.Difficulty" class="form-control" style="width:30%;">
+                <option value="">Difficulty</option>
+                <option>Easy</option>
+                <option>Normal</option>
+                <option>Hard</option>
+            </select>
+            <span asp-validation-for="Input.Difficulty" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.CoockingTime"></label>
+            <input type="number" step="0.1" asp-for="Input.CoockingTime" class="form-control" />
+            <div><small>Time in hours</small></div>
+            <span asp-validation-for="Input.CoockingTime" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.Portions"></label>
+            <input type="number" asp-for="Input.Portions" class="form-control" />
+            <span asp-validation-for="Input.Portions" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.PreviewText"></label>
+            <textarea asp-for="Input.PreviewText" class="form-control"></textarea>
+            <span asp-validation-for="Input.PreviewText" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.Text"></label>
+            <textarea asp-for="Input.Text" id="summernote"></textarea>
+            <span asp-validation-for="Input.Text" class="text-danger"></span>
+        </div>
+        @if (Model.Input?.localUserId != null && Model.Input?.localRecipesId != 0)
+        {
+            <button id="add-recipes-button" type="submit" class="btn btn-primary">
+                Save
+            </button>
+        }
+        else
+        {
+            <button id="add-recipes-button" type="submit" class="btn btn-primary">
+                Create
+            </button>
+        }
+    </form>
+</div>
+<script>
+    jQuery(function ($) {
+        $('#summernote').summernote({
+            minHeight: 300,
+            toolbar: [
+                ['uploadcare', ['uploadcare']],
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'clear']],
+                ['fontname', ['fontname']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']],
+                ['table', ['table']],
+                ['insert', ['link', 'hr']],
+                ['misc', ['fullscreen', 'codeview','undo','redo']]
+            ],
+            disableDragAndDrop: true,
+            uploadcare: {
+                buttonLabel: 'Image',
+
+                buttonIcon: 'picture-o',
+
+                tooltipText: 'Upload images',
+
+                publicKey: '471545bc641d90ab4a8d',
+                crop: 'free',
+                tabs: 'file url facebook gdrive dropbox instagram vk',
+                multiple: true
+            }
+        });
+    });
+</script>
+<script>
+    UPLOADCARE_PUBLIC_KEY = '471545bc641d90ab4a8d',
+    UPLOADCARE_LOCALE = 'ru',
+    UPLOADCARE_TABS = 'file url facebook gdrive dropbox instagram vk',
+    UPLOADCARE_EFFECTS = 'crop,rotate,mirror,flip,enhance,sharp,blur,grayscale,invert',
+    UPLOADCARE_IMAGES_ONLY = true,
+    UPLOADCARE_PREVIEW_STEP = true,
+    UPLOADCARE_CLEARABLE = true,
+    UPLOADCARE_
+</script>
+
+<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+<script src="https://ucarecdn.com/libs/widget-tab-effects/1.x/uploadcare.tab-effects.js"></script>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

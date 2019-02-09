@@ -1,0 +1,16 @@
+.slider-panel {
+    margin-bottom: 20px;
+    padding: 0 20px 0 20px;
+  }
+
+.carousel-item .row .col-md-3 img {
+    height: 100%;
+    max-height: 250px;
+    width: 100%;
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .1);
+}
+@media screen and (max-width: 1000px) {
+    .small-screen{
+        display: none !important;
+    }
+}

@@ -1,0 +1,105 @@
+﻿@page
+@model ItraRecipes.Pages.Account.Manage.MyRecipesModel
+@{
+    ViewData["Title"] = "My recipes";
+}
+
+<h4>My Recipes</h4>
+<form asp-page="./Index" method="get">
+    <div class="row form-actions no-color">
+        <div class="col-md-4">
+            <input type="text" name="UserId" value="@Model.Id" hidden />
+            <input type="text" name="SearchString" value="@Model.CurrentFilter" placeholder="Enter to filter..." class="form-control" />
+        </div>
+        <div class="col-md-6">
+            <input type="submit" value="Search" asp-page="./MyRecipes" class="btn btn-success" /> |
+            <a asp-page="./MyRecipes" asp-route-UserId="@Model.Id">Return to full list</a>
+        </div>
+    </div>
+</form>
+<br />
+<form method="post">
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">
+                    <a asp-page="./MyRecipes" asp-route-UserId="@Model.Id" asp-route-sortOrder="@Model.NameSort" asp-route-currentFilter="@Model.CurrentFilter">
+                        Name
+                    </a>
+                </th>
+                <th scope="col">
+                    <a asp-page="./MyRecipes" asp-route-UserId="@Model.Id" asp-route-sortOrder="@Model.CategorySort" asp-route-currentFilter="@Model.CurrentFilter">
+                        Category
+                    </a>
+                </th>
+                <th scope="col">
+                    <a asp-page="./MyRecipes" asp-route-UserId="@Model.Id" asp-route-sortOrder="@Model.ingredientsSort" asp-route-currentFilter="@Model.CurrentFilter">
+                        Ingredients
+                    </a>
+                </th>
+                <th scope="col">
+                    <a asp-page="./MyRecipes" asp-route-UserId="@Model.Id" asp-route-sortOrder="@Model.DateSort" asp-route-currentFilter="@Model.CurrentFilter">
+                        Last change
+                    </a>
+                </th>
+                <th scope="col">
+                    <a asp-page="./MyRecipes" asp-route-UserId="@Model.Id" asp-route-sortOrder="@Model.RateSort" asp-route-currentFilter="@Model.CurrentFilter">
+                        Rating
+                    </a>
+                </th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var recipes in Model.Recipes)
+            {
+                <tr>
+                    <th scope="row">
+                        @recipes.Name
+                    </th>
+                    <td>@recipes.CategoryName</td>
+                    <td>@recipes.Ingredients</td>
+                    <td>@recipes.Date</td>
+                    <td>@recipes.Rating</td>
+                    <td style="width:17%">
+                        <div class="dropdown open">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Action
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" asp-page="./AddRecipes" asp-route-UserId="@Model.Id">Add</a>
+                                <a class="dropdown-item" asp-page="./AddRecipes" asp-route-RecipesId="@recipes.Id" asp-route-UserId="@Model.Id">Edit</a>
+                                <a class="dropdown-item" href='@Url.Page("/RecipesPage", new {RecipesId = recipes.Id })'>Open</a>
+                                <button type="submit" class="dropdown-item" asp-page-handler="delete"
+                                        asp-route-RecipesId="@recipes.Id" asp-route-UserId="@Model.Id">
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @{
+        var prevDisabled = !Model.Recipes.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.Recipes.HasNextPage ? "disabled" : "";
+    }
+
+    <a asp-page="./MyRecipes"
+       asp-route-UserId="@Model.Id"
+       asp-route-sortOrder="@Model.CurrentSort"
+       asp-route-pageIndex="@(Model.Recipes.PageIndex - 1)"
+       asp-route-currentFilter="@Model.CurrentFilter"
+       class="btn btn-secondary @prevDisabled">
+        Prev
+    </a>
+    <a asp-page="./MyRecipes"
+       asp-route-UserId="@Model.Id"
+       asp-route-sortOrder="@Model.CurrentSort"
+       asp-route-pageIndex="@(Model.Recipes.PageIndex + 1)"
+       asp-route-currentFilter="@Model.CurrentFilter"
+       class="btn btn-secondary @nextDisabled">
+        Next
+    </a>
+</form>

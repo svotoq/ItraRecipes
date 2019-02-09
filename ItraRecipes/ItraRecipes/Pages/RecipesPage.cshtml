@@ -1,0 +1,123 @@
+﻿@page "{RecipesId:int}"
+@model ItraRecipes.Pages.RecipesPageModel
+@{
+    ViewData["Title"] = "Recipe";
+
+}
+<link href="~/css/RecipesPage.css" rel="stylesheet" />
+<div class="container">
+    <div class="row">
+        <div class="col-md-7">
+            <div class="main-info box-shadow">
+                <small>@Model.Recipes.Date</small>
+                <h3>@Model.Recipes.Name</h3>
+                <img src="@Model.Recipes.PreviewImg" />
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="recipes-desc box-shadow">
+                <div class="row">
+                </div>
+                <p>@Model.Recipes.PreviewText</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="recipes-navigation box-shadow">
+                <ul class="nav nav-tabs">
+                    <li><a class="nav-link" data-toggle="tab" href="#panel1">Ingredients</a></li>
+                    <li><a class="nav-link" data-toggle="tab" href="#panel2">Cooking</a></li>
+                </ul>
+            </div>
+            <div class="tab-content box-shadow">
+                <div id="panel1" class="tab-pane fade in active">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="ingredients">
+                                <h4 class="header">Ingredients</h4>
+                                <table class="table table-striped">
+                                    <tbody>
+                                        @foreach (var ing in Model.ingredients)
+                                        {
+                                            <tr>
+                                                <td>@ing.Name</td>
+                                                <th>@ing.Count</th>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="general-info">
+                                <h4>Common information</h4>
+                                <div class="info box-shadow">
+                                    <div class="box-info">
+                                        <h5>Cooking time</h5>
+                                        <strong>@Model.Recipes.CoockingTime</strong>
+                                    </div>
+                                    <div class="box-info">
+                                        <h5>Difficulty</h5>
+                                        <strong>@Model.Recipes.Difficulty</strong>
+                                    </div>
+                                    <div class="box-info">
+                                        <h5>Portions</h5>
+                                        <strong>@Model.Recipes.Portions</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="panel2" class="tab-pane fade">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="recipes">
+                                <h2>Recipe</h2>
+                                <text> @Html.Raw(Model.Recipes.Text)</text>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="bottom-navigation box-shadow">
+                <div>
+                    <span>Rating</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="leave-a-comment box-shadow">
+                <div>
+                    <div>
+                        <textarea>Comment</textarea>
+                    </div>
+                    <button type="submit">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9">
+            <div class="comment box-shadow">
+                <div>
+                    <h5>Name</h5>
+                    <span>Comment</span>
+                    <div>
+                        <span>Date</span>
+                    </div>
+                    <div>
+                        <span>Likes</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
